@@ -12,19 +12,19 @@ Postoji vise opcija koje mozemo da odaberemo i personalizujemo izlaz komande.
 
 Prvo napravimo tekstualni fajl sa linijama teksta(max 250 karaktera po liniji) u istom folderu u kom je projekat iz kog cemo izvlaciti linije.
 
-Kada se prebacimo u lokaciju projekta u terminalu potrebno je u  napisati "make" koji ce nam napraviti fajl za pokretanje funkcije.
+Kada se prebacimo u lokaciju projekta u terminalu potrebno je u  napisati "make" koji ce nam napraviti izvrsni program pod nazivom grep.
 
 Nakon toga treba upisati komandu u ovom formatu:
 
-            ./grep [OPCIJE] OBRAZAC [FAJL...]
+          ./grep [OPCIJE] OBRAZAC [FAJL...]
 
-OPCIJE koje mozemo dati krecu sa "-" i onda slovom za konadu koju hocemo:
+OPCIJE koje mozemo dati krecu sa "-" i onda slovom za komandu koju hocemo:
 
   -h     Prikazuje pomocnu poruku
   -v     Invertuje rezultate podudaranja(ispisuje sve linije koje ne sadrze match)
   -i     Ignorise razlike izmedju velikih i malih slova
   -c     Ispisuje samo broj linija koje sadrze match
-  -m NUM Zaustavi se posle NUM odabranih linija
+  -m NUM Zaustavi se posle NUM odabranih linija(pise se u terminalu "./grep [OPCIJE] NUM OBRAZAC [FAJL...]")
   -n     Ispisuje broj linije uz izlazne linije
   -w     Podudara samo cele reci
   -x     Podudara samo cele linije
@@ -39,7 +39,9 @@ Za pocetak koricenja mozemo samo napisati :
  
  da nam izbaci pomocnu poruku.
 
- Nakon toga mozemo pretrazivati reci ili recenice, takodje mozemo i napisati samo:
+ Nakon toga mozemo pretrazivati reci ili recenice.
+ 
+  Takodje mozemo i napisati samo:
 
     ./grep OBRAZAC [FAJL...]
 
