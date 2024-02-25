@@ -3,6 +3,15 @@
 #include <ctype.h>
 #include <string.h>
 
+int vise_reci(const char *str) {
+    while (*str) {
+        if (*str == ' ') {
+            return 1;
+        }
+        str++;
+    }
+    return 0;
+}
 
 int i_strstr(const char* linija, const char* pattern) {
    
@@ -42,6 +51,72 @@ int grep(FILE *file, const char *pattern, int inverzija, int ignorisi_velicinu, 
         char *kopija_linije = strdup(linija);
         char *token = strtok(kopija_linije, " \t\n");
       
+      if(vise_reci(pattern)){
+                int matchl=0;
+                
+                if(ignorisi_velicinu){
+                   
+                  matchl=i_strstr(linija,pattern);
+                }else {
+                   if(strstr(linija,pattern)!=NULL){
+                    matchl=1;
+                   }
+                    
+                }
+
+
+              if(matchl && !cela_rec && (!cela_linija || (cela_linija && strlen(pattern)==strlen(linija)-1))){  
+
+                    
+                    if(zaustavi_posle>0){
+                        if(inverzija){
+                           free(kopija_linije);
+                            continue;
+                        }
+                        if(samo_broj){
+                            br_matchova++;
+                            free(kopija_linije);
+                            continue;
+                        }
+                        if (ispisi_broj_linije) {
+                            printf("%d:", broj_linija);
+                        }
+                        printf("%s", linija);
+                        br_matchova++;
+                        zaustavi_posle--;
+                        if (zaustavi_posle == 0) {
+                         free(kopija_linije);
+                            return br_matchova; 
+                        }
+                        free(kopija_linije);
+                        continue;
+                        
+                    }
+                   
+                    br_matchova++;
+                   
+                    if (inverzija) {
+                        free(kopija_linije);
+                        continue;
+                        
+                    } 
+                    if (ispisi_broj_linije) {
+                        printf("%d:", broj_linija);
+                    }
+                    if(samo_broj){
+                       free(kopija_linije);
+                        continue;;
+                    }
+                    else {
+                        printf("%s", linija);
+                        free(kopija_linije);
+                        continue;
+                    }
+                    
+                }  
+             
+            }
+
         int match=0;
         
         while (token != NULL) {
@@ -55,7 +130,7 @@ int grep(FILE *file, const char *pattern, int inverzija, int ignorisi_velicinu, 
         
             
            
-            if (match) {
+            if (match && !cela_linija) {
 
                 if(zaustavi_posle>0){
                    if ((!cela_rec || (cela_rec && strlen(token) == strlen(pattern))) ) {
@@ -229,7 +304,7 @@ int main(int argc, char *argv[]){
                 }
             }
                 if(flag>0){
-                i++;
+                i++;   
                 }
         } else {
 
@@ -254,10 +329,16 @@ int main(int argc, char *argv[]){
             perror("Neuspelo otvaranje datoteke");
             continue;
         }
-        
+        printf("FAJL: %s\n\n",argv[i]);
         int mecing = grep(file, pattern, inverzija, ignorisi_velicinu, samo_broj, zaustavi_posle, ispisi_broj_linije, cela_rec, cela_linija);
         ukupno_mecing += mecing;
-
+            if(ukupno_mecing>0 || samo_broj==1){
+            for(int i=0;i<50;i++){
+                printf("-");
+            }
+            }
+            printf("\n");
+        
         fclose(file);
     }
 
